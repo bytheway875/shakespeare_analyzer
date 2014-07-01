@@ -4,13 +4,15 @@ class MacbethAnalyzer
   require 'open-uri'
   require 'active_support/inflector'
 
-  attr_accessor :macbeth
-
   # Initializing a MacbethAnalyzer object will load the document, and run the program.
   def initialize
     @macbeth = Nokogiri::XML(open("http://www.ibiblio.org/xml/examples/shakespeare/macbeth.xml"))
     format_results
   end
+
+  private
+
+  attr_accessor :macbeth
 
   # Find all speech nodes
   def speeches
@@ -23,8 +25,8 @@ class MacbethAnalyzer
     speakers = {}
     speeches.each do |speech|
       speaker = speech.xpath("SPEAKER").text
-      speakers["#{speaker}"] ||= 0
-      speakers["#{speaker}"] += speech.xpath("LINE").count
+      speakers[speaker] ||= 0
+      speakers[speaker] += speech.xpath("LINE").count
     end
     speakers
   end
