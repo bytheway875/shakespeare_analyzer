@@ -3,6 +3,7 @@ class MacbethAnalyzer
   require 'nokogiri'
   require 'open-uri'
   require 'active_support/inflector'
+  require 'byebug'
 
   # Initializing a MacbethAnalyzer object will load the document, and run the program.
   def initialize
@@ -22,13 +23,11 @@ class MacbethAnalyzer
   # Loop through speech nodes to find the speakers and assign the corresponding lines within
   # the speech node to that speaker.
   def speakers_hash
-    speakers = {}
-    speeches.each do |speech|
+    speeches.inject(Hash.new(0)) do |speakers, speech|
       speaker = speech.xpath("SPEAKER").text
-      speakers[speaker] ||= 0
       speakers[speaker] += speech.xpath("LINE").count
+      speakers
     end
-    speakers
   end
 
   # Format the results into a something more readable. Titleize the names to ensure they're
