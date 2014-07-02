@@ -3,17 +3,14 @@ class MacbethAnalyzer
   require 'nokogiri'
   require 'open-uri'
   require 'active_support/inflector'
-  require 'byebug'
+
+  attr_accessor :macbeth
 
   # Initializing a MacbethAnalyzer object will load the document, and run the program.
   def initialize
     @macbeth = Nokogiri::XML(open("http://www.ibiblio.org/xml/examples/shakespeare/macbeth.xml"))
     format_results
   end
-
-  private
-
-  attr_accessor :macbeth
 
   # Find all speech nodes
   def speeches
