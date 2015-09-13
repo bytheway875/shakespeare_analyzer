@@ -6,9 +6,13 @@ class MacbethAnalyzer
 
   attr_accessor :macbeth
 
-  # Initializing a MacbethAnalyzer object will load the document, and run the program.
+  # Initializing a MacbethAnalyzer object will load the document
   def initialize
     @macbeth = Nokogiri::XML(open("http://www.ibiblio.org/xml/examples/shakespeare/macbeth.xml"))
+  end
+  
+  # Friendlier name for running the analyzer
+  def analyze
     format_results
   end
 
@@ -36,4 +40,5 @@ class MacbethAnalyzer
   end
 end
 
-MacbethAnalyzer.new
+analyzer = MacbethAnalyzer.new
+analyzer.analyze
